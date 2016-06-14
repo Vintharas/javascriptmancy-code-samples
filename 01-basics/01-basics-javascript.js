@@ -842,6 +842,13 @@ console.log({} + {});
 
 // Oftentimes you won't run into these issues when building real web applications and my advice is that you ignore them. Be aware that they exist but just don't use them, or use patterns or conventions to avoid them.
 
+narrate(`The first rays of a new day like dubious trendils of light 
+    start approaching the clearing when Randalf notices that the stranger 
+    is looking weirdly at him...`);
+
+randalf.says("Yes, I know what you are thinking, it is a lot to take in...");
+stranger.says('...err... no... Who the hell are you? and whaaaat is a kender?!');
+
 
 
 
