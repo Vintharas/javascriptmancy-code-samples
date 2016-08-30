@@ -148,6 +148,7 @@ function startWorld(){
     window.bandalf = Character('Bandalf');
     window.zandalf = Character('Zandalf');
     window.gort = Character('Gort');
+    window.rat = Character('Rat');
     
     function weaveSpell(spell){
         eval(spell);
