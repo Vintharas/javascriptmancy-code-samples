@@ -122,10 +122,10 @@ Hint: Create a interface using the observations above and use that new type in y
 */
 var DamageType;
 (function (DamageType) {
-    DamageType[DamageType["Physical"] = 0] = "Physical";
-    DamageType[DamageType["Ice"] = 1] = "Ice";
-    DamageType[DamageType["Fire"] = 2] = "Fire";
-    DamageType[DamageType["Poison"] = 3] = "Poison";
+    DamageType["Physical"] = "Physical";
+    DamageType["Ice"] = "Ice";
+    DamageType["Fire"] = "Fire";
+    DamageType["Poison"] = "Poison";
 })(DamageType || (DamageType = {}));
 function frost(target, mana) {
     // from the example looks like damage 
@@ -141,7 +141,240 @@ console.log('A giant lizard leaps inside the wall!');
 var giantLizard = world.getLizard();
 world.mooleen.says('And that is as far as you go');
 frost(giantLizard, /* mana */ 2);
-// => 
+// => The air surrounding the target starts quickly forming a 
+//    frozen halo as the water particles start congealing. 
+//    All of the sudden it explodes into freezing ice crystals 
+//    around the giant lizard.
+//    The giant lizard is very sensitive to cold.
+//    It wails and screams. (Damage 200%)
+//    You damage the giant lizard (-400hp)
+//    The giant lizard dies.
+world.mooleen.laughsWithGlee();
+// => Mooleen laughs with Glee
+/*
+More and more lizards make it into the fortified area.
+Mooleen, Red, randalf and bandalf form a semicircle against
+the obsidian obelisk and fight fiercely for every inch.
+When the lizards are about to overwhelm the group a huge furry
+figure flashes in front of them charging through the lizard
+front line and causing enough damage to let the company regroup.
+*/
+world.mooleen.says('What?');
+world.rat.says('Happy to serve!');
+world.mooleen.says('You can do that?!');
+world.rat.says('Err... we familiars are very flexible creatures');
+world.mooleen.says("Why didn't you say it before?");
+world.rat.says("Oh... the transformation is incredibly painful");
+world.rat.says("And I bet you'd want to ride on my back" +
+    "I'm not putting up with that");
+console.log("=== 3) Wholesale Destruction! ===");
+/*
+Killing the beasts one by one won't cut it. We need a more powerful spell that can annihilate them in groups. Design an `iceCone` spell that can impact several targets at once.
+
+It should fulfill the following snippet of code:
+
+{lang="javascript"}
+~~~~~~~~
+iceCone(lizard, smallerLizard, greaterLizard);
+// => Cold ice crystals explode from the palm of your hand
+//    and impact the lizard, smallerLizard, greaterLizard.
+//    The lizard is very sensitive to cold.
+//    It wails and screams. (Damage 200%)
+//    You damage the giant lizard (-500hp)
+//    The smaller lizard is very sensitive to cold.
+//    It wails and screams. (Damage 200%)
+//    You damage the giant lizard (-500hp)
+//    etc...
+~~~~~~~~
+
+Hint: you can use rest parameters and array type annotations!
+*/
+function iceCone() {
+    var targets = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        targets[_i] = arguments[_i];
+    }
+    var damage = 500;
+    console.log("\nCold ice crystals explode from the palm of your hand\nand impact the " + targets.join(', ') + ".");
+    for (var _a = 0, targets_1 = targets; _a < targets_1.length; _a++) {
+        var target = targets_1[_a];
+        target.takeDamage(DamageType.Ice, damage);
+    }
+}
+iceCone(getLizard(), getLizard(), getLizard());
+// => Cold ice crystals explode from the palm of your hand
+// and impact the giant lizard, giant lizard, giant lizard.
+// The giant lizard is very sensitive to cold.
+// It wails and screams. (Damage 200%)
+// You damage the giant lizard (-1000hp)
+// The giant lizard dies.
+// The giant lizard is very sensitive to cold.
+// It wails and screams. (Damage 200%)
+// You damage the giant lizard (-1000hp)
+// The giant lizard dies.
+// The giant lizard is very sensitive to cold.
+// It wails and screams. (Damage 200%)
+// You damage the giant lizard (-1000hp)
+// The giant lizard dies.
+world.mooleen.says('Yes!');
+/*
+Mooleen looks around. She's fending off the lizards fine but
+her companions are having some problems.
+
+Red is deadly with the lance and shield but his lance,
+in spite of of his massive strength, hardly penetrates
+the lizards' thick skin.
+
+Bandalf is slowly catching up and crafting ice spells
+and Randalf, though, a master with the quarterstaff can
+barely fend off the attacks from a extremely huge lizard.
+
+Things start to look grimmer and grimmer as more lizards jump over
+the wall around the obelisk.
+*/
+world.mooleen.says('I need to do something quick');
+console.log("=== 4) Empower Your Companions with Enchantments! ===");
+/*
+Things are looking grim. Your only chance is to empower your companions so that you can offer a strong united front against the growing host of enemies. Craft an `enchant` spell that can enchant weapons and armor with elemental properties.
+
+The `enchant` spell should satisfy the following snippet of code:
+
+{lang="javascript"}
+~~~~~~~~
+quarterstaff.stats();
+// => Name: Crimson Quarterstaff
+// => Damage Type: Physical
+// => Damage: d20
+// => Bonus: +20
+// => Description: A quarterstaff of pure red
+
+enchant(quarterstaff, MagicElement.Ice);
+// => You enchant the Crimson Quarterstaff with a frozen ice incantation
+//    The weapon gains Ice damage and +20 bonus damage
+
+quarterstaff.stats();
+// => Name: Crimson Quarterstaff
+// => Damage Type: Ice
+// => Damage: d20
+// => Bonus: +40
+
+cloak.stats();
+// => Name: Crimson Cloak
+// => Type: cloak
+// => Protection: 20
+// => ElementalProtection: none
+// => Description: A cloak of pure red
+
+enchant(cloak, MagicElement.Fire);
+// => You enchant the Crimson Cloak with a fire incantation
+//    The Crimson Cloak gains +20 fire protection
+
+cloak.stats();
+// => Name: Crimson Cloak
+// => Type: cloak
+// => Protection: 20
+// => ElementalProtection: Fire (+20)
+// => Description: A cloak of pure red
+~~~~~~~~
+
+Hint: Use union types and type guards within the `enchant` spell to allow it to enchant both `Weapon` and `Armor`
+*/
+var Weapon = (function () {
+    function Weapon(name, damageType, damage, bonusDamage, description) {
+        this.name = name;
+        this.damageType = damageType;
+        this.damage = damage;
+        this.bonusDamage = bonusDamage;
+        this.description = description;
+    }
+    Weapon.prototype.stats = function () {
+        return "\nName: " + this.name + "\nDamage Type: " + this.damageType + "\nDamage: d" + this.damage + "\nBonus: +" + this.bonusDamage + "\nDescription: " + this.description + "\n        ";
+    };
+    Weapon.prototype.toString = function () { return this.name; };
+    return Weapon;
+}());
+var ArmorType;
+(function (ArmorType) {
+    ArmorType["Cloak"] = "cloak";
+    ArmorType["Platemail"] = "plate mail";
+})(ArmorType || (ArmorType = {}));
+var Armor = (function () {
+    function Armor(name, type, protection, description) {
+        this.name = name;
+        this.type = type;
+        this.protection = protection;
+        this.description = description;
+        this.elementalProtection = [];
+    }
+    Armor.prototype.stats = function () {
+        return "\nName: " + this.name + "\nType: " + this.type + "\nProtection: " + this.protection + "\nElementalProtection: " + (this.elementalProtection.join(', ') || 'none') + "\nDescription: " + this.description + "\n        ";
+    };
+    Armor.prototype.toString = function () { return this.name; };
+    return Armor;
+}());
+function enchant(item, element) {
+    console.log("You enchant the " + item + " with a " + element + " incantation");
+    if (item instanceof Weapon) {
+        enchantWeapon(item, element);
+    }
+    else {
+        enchantArmor(item, element);
+    }
+    function enchantWeapon(weapon, element) {
+        var bonusDamage = 20;
+        weapon.damageType = mapMagicElementToDamage(element);
+        weapon.bonusDamage += bonusDamage;
+        console.log("The " + item + " gains " + bonusDamage + " " + weapon.damageType + " damage");
+    }
+    function enchantArmor(armor, element) {
+        var elementalProtection = {
+            damageType: mapMagicElementToDamage(element),
+            protection: 20,
+            toString: function () { return this.damageType + " (+" + this.protection + ")"; }
+        };
+        armor.elementalProtection.push(elementalProtection);
+        console.log("the " + item + " gains " + elementalProtection.protection + " " + elementalProtection.damageType + " incantation");
+    }
+}
+function mapMagicElementToDamage(element) {
+    switch (element) {
+        case MagicElement.Ice: return DamageType.Ice;
+        case MagicElement.Fire: return DamageType.Fire;
+        default: return DamageType.Physical;
+    }
+}
+var quarterstaff = getQuarterstaff();
+console.log(quarterstaff.stats());
+// => Name: Crimson Quarterstaff
+//    Damage Type: Physical
+//    Damage: d20
+//    Bonus: +20
+//    Description: A quarterstaff of pure red
+enchant(quarterstaff, MagicElement.Ice);
+// => You enchant the Crimson Quarterstaff with a frozen ice incantation
+//    The Crimson Quarterstaff gains 20 Ice damage
+console.log(quarterstaff.stats());
+// Name: Crimson Quarterstaff
+// Damage Type: Ice
+// Damage: d20
+// Bonus: +40
+// Description: A quarterstaff of pure red
+var cloak = getCloak();
+console.log(cloak.stats());
+// Name: Crimson Cloak
+// Type: cloak
+// Protection: 20
+// ElementalProtection: none
+// Description: A cloak of pure red
+enchant(cloak, MagicElement.Fire);
+// You enchant the Crimson Cloak with a fire incantation
+// the Crimson Cloak gains 20 Fire incantation
+console.log(cloak.stats());
+// Name: Crimson Cloak
+// Type: cloak
+// Protection: 20
+// ElementalProtection: Fire (+20)
+// Description: A cloak of pure red
 /* world :) */
 /**** World interface *****/
 function createWorld() {
@@ -299,7 +532,7 @@ function GiantLizard() {
             console.log("You damage the giant lizard (-" + actualDamage + "hp)");
             this.hitPoints -= actualDamage;
             if (giantLizard.hitPoints <= 0) {
-                console.log(this + " dies.");
+                console.log("The " + this + " dies.");
             }
         },
         toString: function () { return 'giant lizard'; }
@@ -307,4 +540,10 @@ function GiantLizard() {
 }
 function getLizard() {
     return GiantLizard();
+}
+function getQuarterstaff() {
+    return new Weapon('Crimson Quarterstaff', DamageType.Physical, 20, 20, 'A quarterstaff of pure red');
+}
+function getCloak() {
+    return new Armor('Crimson Cloak', ArmorType.Cloak, 20, 'A cloak of pure red');
 }
