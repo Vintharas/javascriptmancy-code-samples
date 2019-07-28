@@ -260,13 +260,13 @@ Object.assign(ClassyBard.prototype,
        canPlayMusic);
 
 // and verify that it works
-let anotherBard = new ClassyBard('guitar', 100, 'Jimi Hendrix', 100);
+let anotherBard = new ClassyBard('guitar', 100, 'Jimmy Hendrix', 100);
 anotherBard.playsMusic();
-// => Kvothe grabs his lute and starts playing music
+// => Jimmy Hendrix grabs his guitar and starts playing music
 anotherBard.steals('orc', /*item*/ 'silver coin');
-// => Kvothe steals silver coin from orc
+// => Jimmy Hendrix steals silver coin from orc
 anotherBard.castsSpell(lightningSpell, orc);
-// => Kvothe casts lightning spell on orc
-// =>A bolt of lightning electrifies orc(-10hp)
+// => Jimmy Hendrix casts lightning spell on orc
+// => A bolt of lightning electrifies orc(-10hp)
 
 
