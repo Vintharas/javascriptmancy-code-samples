@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Javascriptmancy Code Samples</title>
+
+  <link rel="stylesheet" type="text/css" href="./frontend/prism/style.css">
+  <script src='./frontend/prism/script.js'></script>
+
+  <script src='./table-of-contents.js'></script>
+
+  <script src='./frontend/views/table-of-contents.js'></script>
+  <script src='./frontend/views/file.js'></script>
+
+  <script src='./frontend/init.js'></script>
+
+</head>
+
+<body>
+
+  <h1>Javascriptmancy Code Samples</h1>
+
+  <a id='source-link' target='_blank'>
+    <button>
+      GitHub Repo
+    </button>
+  </a>
+  <script>
+    document.getElementById('source-link').href = (() => {
+      const userName = window.location.href.split('/')[2].split('.')[0];
+      const repoName = window.location.href.split('/')[3];
+      const directory = window.location.href.split('/')[4];
+      return 'https://github.com/' + userName + '/' + repoName + '/tree/master/' + directory;
+    })();
+  </script>
+
+  <pre>
+Open your developer console to study the program output.
+  </pre>
+
+  <div id='root'></div>
+
+  <!-- this is ugly for now,
+    but enough to get the idea across
+  -->
+  <div id='theWorld'></div>
+</body>
+
+</html>
