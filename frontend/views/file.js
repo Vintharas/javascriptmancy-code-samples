@@ -32,8 +32,11 @@ async function renderFile(directory, file) {
   const backButton = document.createElement('button');
   backButton.innerHTML = 'table of contents';
   backButton.onclick = () => {
+    console.clear();
+    console.log(views.tableOfContents.console);
+
     document.getElementById('root').innerHTML = '';
-    document.getElementById('root').appendChild(views.tableOfContents);
+    document.getElementById('root').appendChild(views.tableOfContents.dom);
   };
   backButton.style.height = '30px';
 
@@ -41,14 +44,6 @@ async function renderFile(directory, file) {
   const code = await fetch('./' + directory + '/' + file)
     .then(resp => resp.text())
     .then(fileText => fileText);
-
-  console.clear();
-  console.log('--- ' + directory + '/' + file + ' ---');
-  try {
-    eval(code);
-  } catch (err) {
-    console.log(err);
-  }
 
   const codeEl = document.createElement('code');
   codeEl.innerHTML = code;
@@ -65,8 +60,8 @@ async function renderFile(directory, file) {
   container.appendChild(backButton);
   container.appendChild(pre);
 
-  views[directory + '/' + file] = container;
+  views[directory + '/' + file] = { dom: container, console: code };
 
-  return Promise.resolve(container);
+  return Promise.resolve({ dom: container, console: code });
 }
 

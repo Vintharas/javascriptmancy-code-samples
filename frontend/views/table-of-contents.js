@@ -4,16 +4,6 @@ function renderTableOfContents(tableOfContents) {
 
   // history.pushState({}, null, repoName);
 
-  console.clear();
-  console.log(`Let JavaScript Be Your Next Adventure!
-  (https://www.javascriptmancy.com/)
-
-Are you a C# or Java developer curious about the awesome things happening in the JavaScript world? Would you like to be a part of it? Build super rich web applications, mobile apps, backend services or even robots? Does JavaScript frustrate you? Would you like to master it and never again feel like you cannot make the language do what you want?
-
-Are you a fan of the Fantasy genre? A sucker for wizards, elf-bowmen, powerful sorceresses and evil trolls? Love the works of Brandon Sanderson, G.R.R. Martin or Tolkien? Did you enjoy the Lord of the Rings or Game of Thrones?
-
-Then this is the place for you! The JavaScript-mancy series are a collection of beautifully written JavaScript books that are a blast to read. Learn the basics of JavaScript, OOP, Functional Programming, async, ES6, TypeScript, tooling, testing, Angular 2 and more! `);
-
   const tocDiv = Object.keys(tableOfContents)
     .map(directory => {
       const dirNameTextEl = document.createElement('text');
@@ -26,17 +16,33 @@ Then this is the place for you! The JavaScript-mancy series are a collection of 
           liveButton.innerHTML = file + ' (live)';
           liveButton.onclick = () => {
 
+            console.clear();
             document.getElementById('root').innerHTML = '';
 
             if (views[directory + '/' + file]) {
+              console.log('--- ' + directory + '/' + file + ' ---');
+              try {
+                eval(views[directory + '/' + file].console);
+              } catch (err) {
+                console.log(err);
+              }
               document.getElementById('root').appendChild(
-                views[dirNameTextEl + '/' + file]
+                views[directory + '/' + file].dom
               );
             } else {
               renderFile(directory, file)
-                .then(fileView => {
-                  views[dirNameTextEl + '/' + file] = fileView;
-                  document.getElementById('root').appendChild(fileView);
+                .then(fileViews => {
+                  views[directory + '/' + file] = {
+                    dom: fileViews.dom,
+                    console: fileViews.console
+                  };
+                  console.log('--- ' + directory + '/' + file + ' ---');
+                  try {
+                    eval(fileViews.console);
+                  } catch (err) {
+                    console.log(err);
+                  }
+                  document.getElementById('root').appendChild(fileViews.dom);
                 });
             }
 
