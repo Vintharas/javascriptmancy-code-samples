@@ -13,11 +13,24 @@ const repoName = preRepoName
 
 
 const views = {
-  tableOfContents: null,
+  tableOfContents: renderTableOfContents(tableOfContents),
 }
 
 window.onload = () => {
+
+  const urlString = window.location.href;
+  const url = new URL(urlString);
+
+  const directory = url.searchParams.get("directory");
+  const file = url.searchParams.get("file");
+
   const root = document.getElementById('root');
-  views.tableOfContents = renderTableOfContents(tableOfContents);
-  root.appendChild(views.tableOfContents);
+  if (directory && file) {
+    const fileView = renderFile(directory, file);
+    views[directory + '/' + file] = fileView;
+    root.appendChild(fileView);
+  } else {
+    root.appendChild(views.tableOfContents);
+  }
+
 };

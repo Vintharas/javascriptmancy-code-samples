@@ -4,6 +4,11 @@
 
 async function renderFile(directory, file) {
 
+  // // getting this set up for permalinks
+  // const extension = window.location.pathname
+  //   + '/?directory=' + encodeURIComponent(directory)
+  //   + '&file=' + encodeURIComponent(file);
+  // history.pushState({}, null, extension);
 
   if (views[directory + '/' + file]) {
     return views[directory + '/' + file];
@@ -39,7 +44,11 @@ async function renderFile(directory, file) {
 
   console.clear();
   console.log('--- ' + directory + '/' + file + ' ---');
-  (new Function(code))();
+  try {
+    eval(code);
+  } catch (err) {
+    console.log(err);
+  }
 
   const codeEl = document.createElement('code');
   codeEl.innerHTML = code;

@@ -2,6 +2,18 @@
 
 function renderTableOfContents(tableOfContents) {
 
+  // history.pushState({}, null, repoName);
+
+  console.clear();
+  console.log(`Let JavaScript Be Your Next Adventure!
+  (https://www.javascriptmancy.com/)
+
+Are you a C# or Java developer curious about the awesome things happening in the JavaScript world? Would you like to be a part of it? Build super rich web applications, mobile apps, backend services or even robots? Does JavaScript frustrate you? Would you like to master it and never again feel like you cannot make the language do what you want?
+
+Are you a fan of the Fantasy genre? A sucker for wizards, elf-bowmen, powerful sorceresses and evil trolls? Love the works of Brandon Sanderson, G.R.R. Martin or Tolkien? Did you enjoy the Lord of the Rings or Game of Thrones?
+
+Then this is the place for you! The JavaScript-mancy series are a collection of beautifully written JavaScript books that are a blast to read. Learn the basics of JavaScript, OOP, Functional Programming, async, ES6, TypeScript, tooling, testing, Angular 2 and more! `);
+
   const tocDiv = Object.keys(tableOfContents)
     .map(directory => {
       const dirNameTextEl = document.createElement('text');
